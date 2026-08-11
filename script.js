@@ -11,6 +11,19 @@ function imgUrl(url) {
     return API_BASE + url;
 }
 
+function fixImageUrls(html) {
+    if (!html) return html;
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    div.querySelectorAll('img').forEach(img => {
+        const src = img.getAttribute('src');
+        if (src && !src.startsWith('http://') && !src.startsWith('https://') && !src.startsWith('data:')) {
+            img.setAttribute('src', API_BASE + src);
+        }
+    });
+    return div.innerHTML;
+}
+
 document.addEventListener("DOMContentLoaded", async function() {
 
 
@@ -139,7 +152,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                         </div>
                     </div>
                     ${gambarHTML}
-                    <div class="artikel-detail-isi">${post.isi}</div>
+                    <div class="artikel-detail-isi">${fixImageUrls(post.isi)}</div>
                 `;
                 document.title = post.judul + " - MTs Muhammadiyah Martapura";
 
