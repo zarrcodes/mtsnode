@@ -390,8 +390,7 @@
             try {
                 const formData = new FormData();
                 formData.append('file', blob, 'image.jpg');
-                formData.append('folder', folder);
-                const json = await apiFetch('/api/upload', { method: 'POST', body: formData });
+                const json = await apiFetch('/api/upload/' + folder, { method: 'POST', body: formData });
                 return json.url;
             } catch (err) {
                 console.error("Gagal Upload:", err);
