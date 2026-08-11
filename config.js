@@ -2,4 +2,4 @@
 //           isi   = URL Cloudflare Tunnel (misal: https://api.mtsmumarta.sch.id)
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0' || window.location.hostname.startsWith('192.168.'))
   ? ''
-  : 'https://tap-opinions-program-skirts.trycloudflare.com';   // URL tunnel backend
+  : 'https://effectively-loads-galleries-soma.trycloudflare.com';   // URL tunnel backend
