@@ -5,6 +5,12 @@ async function apiGet(path) {
     return json;
 }
 
+function imgUrl(url) {
+    if (!url || url.trim() === '') return null;
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+    return API_BASE + url;
+}
+
 document.addEventListener("DOMContentLoaded", async function() {
 
 
@@ -68,9 +74,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                     card.href = "artikel.html?id=" + post.id; 
                     card.className = "artikel-card";
 
-                    let imgSrc = post.gambar_url && post.gambar_url.trim() !== "" 
-                                 ? post.gambar_url 
-                                 : "assets/banner.png";
+                    let imgSrc = imgUrl(post.gambar_url) || "assets/banner.png";
 
                     card.innerHTML = `
                         <div class="artikel-img-box">
@@ -124,7 +128,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
                 let gambarHTML = "";
                 if (post.gambar_url && post.gambar_url.trim() !== "") {
-                    gambarHTML = `<img src="${post.gambar_url}" alt="${post.judul}" class="artikel-detail-img">`;
+                    gambarHTML = `<img src="${imgUrl(post.gambar_url)}" alt="${post.judul}" class="artikel-detail-img">`;
                 }
 
                 artikelFullContentCheck.innerHTML = `
@@ -150,7 +154,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                             const card = document.createElement("a");
                             card.href = "artikel.html?id=" + item.id;
                             card.className = "artikel-card";
-                            let imgSrc = item.gambar_url && item.gambar_url.trim() !== "" ? item.gambar_url : "assets/banner.png";
+                            let imgSrc = imgUrl(item.gambar_url) || "assets/banner.png";
 
                             card.innerHTML = `
                                 <div class="artikel-img-box"><img src="${imgSrc}" class="artikel-img"></div>
@@ -191,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                             const card = document.createElement("a");
                             card.href = "artikel.html?id=" + item.id;
                             card.className = "artikel-card";
-                            let imgSrc = item.gambar_url && item.gambar_url.trim() !== "" ? item.gambar_url : "assets/banner.png";
+                            let imgSrc = imgUrl(item.gambar_url) || "assets/banner.png";
 
                             card.innerHTML = `
                                 <div class="artikel-img-box"><img src="${imgSrc}" class="artikel-img"></div>

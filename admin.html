@@ -294,6 +294,12 @@
             return json;
         }
 
+        function imgUrl(url) {
+            if (!url || url.trim() === '') return null;
+            if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+            return API_BASE + url;
+        }
+
         let coverBlob = null;
         let coverBase64Preview = "";
 
@@ -571,7 +577,7 @@
             document.getElementById("judul").value = item.judul;
             document.getElementById("tanggal").value = item.tanggal;
             document.getElementById("editor").innerHTML = item.isi;
-            coverBase64Preview = item.gambar_url || "";
+            coverBase64Preview = imgUrl(item.gambar_url) || "";
             coverBlob = null;
             
             if (coverBase64Preview) {
