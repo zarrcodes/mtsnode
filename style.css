@@ -1,0 +1,388 @@
+:root {
+    --biru-muh: #0b3663;
+    --bg-body: #ffffff;
+    --bg-card: #f0f8fb;
+    --teks-utama: #000000;
+}
+
+/* HAPUS BORDER & RADIUS SECARA GLOBAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    border-radius: ;
+    border: none !important; /* MATIKAN SEMUA BORDER HITAM/GARIS */
+    outline: none;
+}
+
+body, html {
+    background-color: var(--bg-body);
+    color: var(--teks-utama);
+    line-height: 1.6;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* NAVBAR CLEAN POLOS */
+.main-navbar { 
+    background-color: #ffffff; 
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); /* Efek pisah pakai shadow tipis tanpa garis */
+}
+
+.nav-container { 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 20px; 
+}
+
+.nav-logo img { height: 48px; }
+
+.menu-toggle { 
+    display: none; 
+    background: var(--biru-muh); 
+    color: white; 
+    padding: 8px 12px; 
+    font-size: 18px; 
+    cursor: pointer; 
+}
+
+.nav-menu { list-style: none; display: flex; align-items: center; gap: 4px; }
+
+.nav-menu li a { 
+    text-decoration: none; 
+    color: var(--biru-muh); 
+    font-weight: bold; 
+    padding: 10px 14px; 
+    font-size: 14px; 
+    display: block; 
+}
+
+.nav-menu li a:hover, .nav-menu li a.active { 
+    background-color: var(--bg-card); 
+}
+
+.btn-ppdb { 
+    background-color: var(--biru-muh) !important; 
+    color: white !important; 
+}
+
+/* DROPDOWN POLOS */
+.dropdown { position: relative; }
+
+.dropdown-content { 
+    display: none; 
+    position: absolute; 
+    background-color: #ffffff; 
+    min-width: 180px; 
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1); 
+}
+
+.dropdown:hover .dropdown-content { display: block; }
+
+.dropdown-content a { 
+    padding: 12px !important; 
+}
+
+.dropdown-content a:hover {
+    background-color: var(--bg-card);
+}
+
+/* SWIPER BANNER TIRUS & POLOS */
+.banner-container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.swiper {
+    width: 100%;
+    height: 500px; /* BANNER TIRUS */
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: var(--biru-muh) !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--biru-muh) !important;
+}
+
+/* CONTAINER & GRID */
+.section-container { max-width: 1100px; margin: 35px auto; padding: 0 20px; }
+
+.section-heading { 
+    text-align: center; 
+    color: var(--biru-muh); 
+    font-size: 22px; 
+    margin-bottom: 20px; 
+    display: block;
+    font-weight: bold;
+}
+
+.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+/* CARDS POLOS PALE BLUE */
+.info-card { 
+    background-color: var(--bg-card); 
+    padding: 22px; 
+    text-decoration: none; 
+    color: var(--teks-utama); 
+    display: block; 
+    transition: background-color 0.2s;
+}
+
+.info-card:hover { 
+    background-color: #e2f1f8; /* Responsif hover halus pengganti border */
+}
+
+.center-text { text-align: center; }
+
+.card-title { color: var(--biru-muh); font-size: 20px; margin-bottom: 12px; font-weight: bold; }
+.card-text { font-size: 15px; }
+
+.card-img { 
+    width: 100%; 
+    height: 160px; 
+    object-fit: cover; 
+    margin-bottom: 12px; 
+}
+
+.card-title-sm { color: var(--biru-muh); font-size: 17px; margin-bottom: 6px; font-weight: bold; }
+.card-desc { font-size: 13.5px; color: #555; }
+
+.sambutan-flex { display: flex; gap: 20px; align-items: flex-start; }
+.kepsek-img { width: 170px; object-fit: cover; }
+.sambutan-text-box p { text-align: justify; margin-bottom: 8px; }
+
+.artikel-meta { font-size: 11.5px; color: #777; margin-bottom: 6px; font-weight: bold; }
+
+/* FOOTER POLOS SOLID MUHAMMADIYAH */
+.main-footer { background-color: var(--biru-muh); color: white; margin-top: 50px; }
+.footer-container { max-width: 1100px; margin: 0 auto; padding: 35px 20px; }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+.footer-logo { max-width: 180px; width: 100%; height: auto; margin-bottom: 12px; }
+.footer-info p { margin-bottom: 8px; font-size: 13.5px; }
+
+.social-links { margin-top: 15px; }
+
+.btn-sosmed { 
+    display: inline-block; 
+    background: white; 
+    color: var(--biru-muh); 
+    padding: 6px 12px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-size: 12px; 
+    margin-right: 5px; 
+}
+
+.footer-maps iframe {
+    width: 100%;
+    height: 200px;
+}
+
+.footer-copyright { background-color: #06213e; text-align: center; padding: 12px; font-size: 13px; }
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 800px) {
+    .swiper { height: 180px; }
+    .menu-toggle { display: block; }
+    
+    .nav-menu { 
+        display: none; 
+        flex-direction: column; 
+        width: 100%; 
+        position: absolute; 
+        top: 100%; 
+        left: 0; 
+        background: white; 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .nav-menu.show { display: flex; }
+    .dropdown-content { position: static; box-shadow: none; padding-left: 15px; }
+    
+    .grid-2-col, .grid-3-col, .footer-grid, .sambutan-flex { grid-template-columns: 1fr; flex-direction: column; }
+    .kepsek-img { width: 100%; max-width: 180px; margin: 0 auto 15px auto; display: block; }
+}
+
+/* ==========================================
+   STYLE LIST ARTIKEL ALA PORTAL BERITA (NEWS)
+   ========================================== */
+
+/* Grid diubah jadi 2 Kolom di Desktop, 1 Kolom di HP */
+#artikelGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+/* KARTU ARTIKEL MODE BARIS (HORIZONTAL) */
+.artikel-card {
+    background-color: var(--bg-card);
+    padding: 10px !important;
+    text-decoration: none;
+    color: var(--teks-utama);
+    display: flex !important; /* Susun Gambar & Teks Berdampingan */
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.2s;
+}
+
+.artikel-card:hover {
+    background-color: #e2f1f8;
+}
+
+/* GAMBAR KECIL DI KIRI (KOTAK PERSIS WEB NEWS) */
+.artikel-img-box {
+    width: 85px !important;
+    height: 70px !important;
+    flex-shrink: 0; /* Biar gambar gak penyok/mengkerut */
+    overflow: hidden;
+}
+
+.artikel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* KONTEN TEKS DI KANAN */
+.artikel-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.artikel-meta-box {
+    font-size: 11px;
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.artikel-judul {
+    color: var(--biru-muh);
+    font-size: 13.5px !important;
+    font-weight: bold;
+    line-height: 1.3;
+    /* Batasi Maksimal 2 Baris Teks (Selebihnya ...) */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* TOMBOL LIHAT SEMUA ARTIKEL */
+.btn-lihat-semua-container {
+    text-align: center;
+    margin-top: 20px;
+    grid-column: 1 / -1;
+}
+
+.btn-lihat-semua {
+    display: inline-block;
+    background-color: var(--biru-muh);
+    color: #ffffff;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-lihat-semua:hover {
+    background-color: #06213e;
+}
+
+/* RESPONSIVE DI HP (1 KOLOM FULL) */
+@media (max-width: 600px) {
+    #artikelGrid {
+        grid-template-columns: 1fr; /* Di HP jadi 1 baris turun ke bawah */
+    }
+}
+
+/* =========================================
+   IKLAN NAVBAR PPDB (LEBIH BESAR & TEPAT DI TENGAH)
+   ========================================= */
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative; /* Dasar acuan posisi tengah */
+}
+
+.nav-iklan-ppdb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    line-height: 0;
+    
+    /* Posisikan iklan persis di tengah navbar */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.nav-iklan-ppdb img {
+    height: 52px; /* Ukuran diperbesar dari 38px ke 52px */
+    max-width: 280px; /* Lebar maksimal iklan */
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1.5px solid #ff0000;
+    
+    /* ANIMASI KELAP-KELIP KENCENG (STROBE DARKWEB) */
+    animation: torchStrobe 0.25s infinite alternate ease-in-out;
+}
+
+/* KEYFRAMES STROBE LIGHT */
+@keyframes torchStrobe {
+    0% {
+        opacity: 1;
+        filter: brightness(100%) contrast(100%) drop-shadow(0 0 2px #ff0000);
+    }
+    50% {
+        opacity: 0.35;
+        filter: brightness(250%) contrast(150%) drop-shadow(0 0 8px #ffff00);
+    }
+    100% {
+        opacity: 1;
+        filter: brightness(180%) contrast(120%) drop-shadow(0 0 5px #00ff00);
+    }
+}
+
+/* Penyesuaian Responsif Layar HP */
+@media (max-width: 600px) {
+    .nav-iklan-ppdb img {
+        height: 42px; /* Ukuran di layar HP diperbesar */
+        max-width: 170px;
+    }
+}

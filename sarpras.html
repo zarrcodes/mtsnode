@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarana & Prasarana - MTs Muhammadiyah Martapura</title>
+
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-header-banner {
+            background-color: var(--biru-muh);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .page-header-banner h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .page-header-banner p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* GRID SARPRAS (3 KOLOM DESKTOP, 2 TABLET, 1 HP) */
+        .sarpras-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sarpras-card {
+            background-color: var(--bg-card);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, background-color 0.2s;
+            overflow: hidden;
+        }
+
+        .sarpras-card:hover {
+            transform: translateY(-4px);
+            background-color: #e2f1f8;
+        }
+
+        .sarpras-img-box {
+            width: 100%;
+            height: 180px;
+            background: #ffffff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sarpras-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sarpras-content {
+            padding: 18px;
+        }
+
+        .sarpras-title {
+            color: var(--biru-muh);
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sarpras-desc {
+            font-size: 13.5px;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .sarpras-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .sarpras-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVBAR -->
+    <nav class="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Logo MTs Muhammadiyah">
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="profil.html">Profil Sekolah</a></li>
+                <li><a href="https://linktr.ee/mtsmuhmtp" target="_blank" class="btn-ppdb">PPDB</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Tenaga Pendidik Dan Kependidikan▼</a>
+                    <div class="dropdown-content">
+                        <a href="struktur.html">Struktur Organisasi</a>
+                        <a href="pendidik.html">Tenaga Pendidik Dan Kependidikan</a>
+                    </div>
+                </li>
+                <li><a href="sarpras.html" class="active">Sarana Prasarana</a></li>
+                <li><a href="eskul.html">Ekstrakulikuler</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 2. HEADER BANNER -->
+    <section class="page-header-banner">
+        <h1>SARANA & PRASARANA</h1>
+      
+    </section>
+
+    <!-- 3. KONTEN UTAMA -->
+    <main class="section-container">
+        <div class="sarpras-grid">
+            
+            <!-- FASILITAS 1 -->
+            <div class="sarpras-card">
+                <div class="sarpras-img-box">
+                    <img src="assets/kelas.jpg" alt="Ruang Kelas">
+                </div>
+                <div class="sarpras-content">
+                    <h3 class="sarpras-title">
+                       Ruang Kelas </h3>
+                    <p class="sarpras-desc">Tempat berlangsungnya kegiatan belajar mengajar.</p>
+                </div>
+            </div>
+
+            <!-- FASILITAS 2 -->
+            <div class="sarpras-card">
+                <div class="sarpras-img-box">
+                    <img src="assets/mushala1.jpg" alt="Mushala">
+                </div>
+                <div class="sarpras-content">
+                    <h3 class="sarpras-title">
+                       Mushala
+                    </h3>
+                    <p class="sarpras-desc">Pusat kegiatan ibadah siswa.</p>
+                </div>
+            </div>
+
+            <!-- FASILITAS 3 -->
+            <div class="sarpras-card">
+                <div class="sarpras-img-box">
+                    <img src="assets/perpustakaan.jpg" alt="Perpustakaan">
+                </div>
+                <div class="sarpras-content">
+                    <h3 class="sarpras-title">
+                       Perpustakaan
+                    </h3>
+                    <p class="sarpras-desc">Pusat literasi dan sumber belajar siswa.</p>
+                </div>
+            </div>
+
+
+            <!-- FASILITAS 5 -->
+            <div class="sarpras-card">
+                <div class="sarpras-img-box">
+                    <img src="assets/lapangan.jpg" alt="Lapangan">
+                </div>
+                <div class="sarpras-content">
+                    <h3 class="sarpras-title">
+                      Lapangan
+                    </h3>
+                    <p class="sarpras-desc">Area terbuka untuk kegiatan olahraga, Ekstrakulikuler, dan madrasah.</p>
+                </div>
+            </div>
+
+            <!-- FASILITAS 6 -->
+            <div class="sarpras-card">
+                <div class="sarpras-img-box">
+                    <img src="assets/kantin.jpg" alt="Kantin & Area Parkir">
+                </div>
+                <div class="sarpras-content">
+                    <h3 class="sarpras-title">
+                         Kantin
+                    </h3>
+                    <p class="sarpras-desc">Tempat menyediakan makanan dan minuman bagi siswa.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 4. FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <img src="assets/logo-putih.png" alt="Logo Bawah" class="footer-logo">
+                    <p>Jl. Kertak Baru, RT.004/RW.02, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan 70651</p>
+                    <p>Email: mtsmuhammadiyahmartapura@gmail.com</p>
+                    
+                    <div class="social-links">
+                        <p><strong>Ikuti Kami:</strong></p>
+                        <a href="https://instagram.com/mtsmuhmtp" target="_blank" class="btn-sosmed">Instagram</a>
+                    </div>
+                </div>
+                
+                <div class="footer-maps">
+                    <p style="margin-bottom: 10px; font-weight: bold;">Peta Lokasi:</p>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?q=Mts%20Muhammadiyah%20Martapura&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" width="100%" height="200" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 MTs Muhammadiyah Martapura
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>

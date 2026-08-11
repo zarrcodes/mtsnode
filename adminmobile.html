@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ibrahim Supabase CMS System Studio (Mobile)</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Utama Web -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase & Mammoth JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+    <style>
+        :root {
+            --admin-bg: #f1f5f9;
+            --admin-primary: #0b3663;
+            --admin-primary-hover: #06213e;
+            --admin-border: #cbd5e1;
+            --admin-text: #1e293b;
+        }
+
+        body {
+            background-color: var(--admin-bg);
+            color: var(--admin-text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* =========================================
+           MOBILE LOGIN SCREEN
+           ========================================= */
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--admin-primary);
+            padding: 16px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            padding: 30px 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .login-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--admin-primary);
+            margin: 10px 0 5px 0;
+        }
+
+        .login-subtitle {
+            font-size: 12.5px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .login-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        /* =========================================
+           MOBILE DASHBOARD LAYOUT
+           ========================================= */
+        .admin-dashboard {
+            display: none;
+            padding: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 14px 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            margin-bottom: 15px;
+            border: 1px solid var(--admin-border);
+        }
+
+        .admin-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--admin-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .card-panel {
+            background: #ffffff;
+            padding: 18px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--admin-border);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            margin-bottom: 15px;
+        }
+
+        .panel-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--admin-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+
+        .form-group { margin-bottom: 16px; text-align: left; }
+        
+        label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .input-text {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--admin-border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            background: #f8fafc;
+            box-sizing: border-box;
+        }
+
+        .input-text:focus {
+            border-color: var(--admin-primary);
+            background: #ffffff;
+        }
+
+        .docx-dropzone {
+            border: 2px dashed #94a3b8;
+            background: #f8fafc;
+            padding: 16px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .editor-container {
+            border: 1.5px solid var(--admin-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .editor-toolbar {
+            background: #f1f5f9;
+            padding: 6px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            border-bottom: 1.5px solid var(--admin-border);
+        }
+
+        .btn-tool {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #334155;
+        }
+
+        .editor-workspace {
+            min-height: 280px;
+            padding: 14px;
+            background: #ffffff;
+            outline: none;
+            font-size: 14.5px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-x: hidden;
+        }
+
+        .editor-workspace p { margin-bottom: 1rem !important; }
+        .editor-workspace img { max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto; }
+        .editor-workspace figure { max-width: 100%; margin: 10px auto; text-align: center; }
+
+        .cover-preview-box {
+            margin-top: 10px;
+            width: 100%;
+            height: 150px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #e2e8f0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .cover-preview-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* TOMBOL NYIMPLE UKURAN JEMPOL (FULL WIDTH) */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-primary, .btn-secondary, .btn-danger, .btn-sm-action {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        .btn-primary { background: var(--admin-primary); color: #ffffff; }
+        .btn-secondary { background: #f1f5f9; color: #334155; border: 1.5px solid #cbd5e1; }
+        .btn-danger { background: #fee2e2; color: #dc2626; border: 1.5px solid #fca5a5; }
+
+        /* TABEL CMS MOBILE COMPATIBLE */
+        .table-responsive { width: 100%; overflow-x: auto; }
+        .cms-table { width: 100%; border-collapse: collapse; min-width: 300px; }
+        .cms-table th { text-align: left; padding: 10px; background: #f8fafc; color: #64748b; font-size: 11px; font-weight: 700; border-bottom: 1px solid var(--admin-border); }
+        .cms-table td { padding: 12px 10px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+
+        .action-btns { display: flex; gap: 4px; }
+        .btn-sm-action { padding: 6px 10px; font-size: 11px; width: auto; }
+        .btn-edit { background: #e0f2fe; color: #0369a1; }
+        .btn-del { background: #fee2e2; color: #dc2626; }
+
+        /* =========================================
+           MOBILE MODAL PREVIEW
+           ========================================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        .reading-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 25px 16px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: sticky;
+            top: 10px;
+            float: right;
+            background: #ef4444;
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .artikel-header-box { margin-bottom: 20px; text-align: left; clear: both; }
+        .artikel-detail-judul {
+            font-size: 22px !important;
+            font-weight: 800 !important;
+            color: #0f172a;
+            line-height: 1.3 !important;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+        .artikel-detail-meta {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            text-transform: uppercase;
+        }
+        .artikel-detail-img {
+            width: 100%;
+            height: auto;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .artikel-detail-isi { font-size: 15px; line-height: 1.7; color: #334155; text-align: left; }
+        .artikel-detail-isi p { margin-bottom: 1.2rem !important; }
+        .artikel-detail-isi figure { margin: 12px auto; text-align: center; max-width: 100%; }
+        .artikel-detail-isi figure img { border-radius: 6px; max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .artikel-detail-isi figcaption { font-size: 12px; color: #64748b; font-style: italic; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN LOGIN MOBILE -->
+    <div id="loginScreen" class="login-wrapper">
+        <div class="login-card">
+            <i class="fa-solid fa-mobile-screen-button fa-3x" style="color: var(--admin-primary); margin-bottom: 10px;"></i>
+            <h2 class="login-title">Mobile Studio Admin</h2>
+            <p class="login-subtitle">Ibrahim Supabase CMS System</p>
+            
+            <form id="formLogin">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" class="input-text" placeholder="Email Admin..." required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPass" class="input-text" placeholder="Kata Sandi..." required>
+                </div>
+                
+                <label class="login-checkbox-group">
+                    <input type="checkbox" id="rememberMe" style="width: 18px; height: 18px;"> Ingat Saya
+                </label>
+
+                <button type="submit" id="btnLogin" class="btn-primary" style="width: 100%;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Masuk Sistem
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD UTAMA MOBILE -->
+    <div id="adminDashboard" class="admin-dashboard">
+        <div class="admin-container">
+            
+            <!-- HEADER -->
+            <header class="admin-header">
+                <h1 class="admin-title">
+                    <i class="fa-solid fa-code"></i> CMS Studio
+                </h1>
+                <div class="header-actions">
+                    <a href="index.html" target="_blank" class="btn-secondary" style="padding: 8px 12px; font-size: 12px;">
+                        <i class="fa-solid fa-globe"></i> Web
+                    </a>
+                    <button class="btn-danger" onclick="logoutAdmin()" style="padding: 8px 12px; font-size: 12px; width: auto;">
+                        <i class="fa-solid fa-power-off"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- EDITOR PANEL -->
+            <div class="card-panel">
+                <div class="panel-title">
+                    <i class="fa-solid fa-pen-to-square"></i> Buat / Edit Artikel
+                </div>
+
+                <!-- IMPORT FILE WORD -->
+                <div class="form-group">
+                    <label class="docx-dropzone" for="docxInput">
+                        <i class="fa-solid fa-file-word fa-2x" style="color: #2b579a; margin-bottom: 6px;"></i>
+                        <div style="font-weight: 700; font-size: 13.5px;">Import File Word (.docx)</div>
+                        <div style="font-size: 11.5px; color: #64748b;">Otomatis masuk teks & format</div>
+                        <input type="file" id="docxInput" accept=".docx" style="display: none;">
+                    </label>
+                </div>
+
+                <form id="formPost">
+                    <input type="hidden" id="editArticleId" value="">
+
+                    <div class="form-group">
+                        <label>Judul Artikel</label>
+                        <input type="text" id="judul" class="input-text" placeholder="Masukkan judul..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal Diposting</label>
+                        <input type="text" id="tanggal" class="input-text" placeholder="Contoh: Sabtu, 1 Agustus 2026" required>
+                    </div>
+
+                    <!-- COVER UPLOAD -->
+                    <div class="form-group">
+                        <label>Gambar Cover Utama</label>
+                        <input type="file" id="coverInput" accept="image/*" class="input-text">
+                        <div id="coverPreviewBox" class="cover-preview-box">
+                            <img id="coverPreviewImg" src="" alt="Cover">
+                        </div>
+                    </div>
+
+                    <!-- WYSIWYG EDITOR -->
+                    <div class="form-group">
+                        <label>Isi Konten Artikel</label>
+                        <div class="editor-container">
+                            <div class="editor-toolbar">
+                                <button type="button" class="btn-tool" onclick="execCmd('bold')"><b>B</b></button>
+                                <button type="button" class="btn-tool" onclick="execCmd('italic')"><i>I</i></button>
+                                <button type="button" class="btn-tool" onclick="insertGambarManual()"><i class="fa-solid fa-image"></i> Gambar</button>
+                                <button type="button" class="btn-tool" onclick="deteksiTagB()"><i class="fa-solid fa-magnifying-glass"></i> Tag</button>
+                            </div>
+                            <div id="editor" class="editor-workspace" contenteditable="true"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAG DETECTOR -->
+                    <div id="tagDetectorBox" style="display:none; background:#fff8e6; border: 1px solid #fde68a; padding:12px; border-radius:8px; margin-bottom:15px;">
+                        <strong style="color: #d97706; font-size: 12.5px;"><i class="fa-solid fa-triangle-exclamation"></i> Terdeteksi Tag Gambar!</strong>
+                        <div id="tagList" style="margin-top: 8px;"></div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" id="btnPublish" class="btn-primary">
+                            <i class="fa-solid fa-paper-plane"></i> Terbitkan Artikel
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="bukaPreview()">
+                            <i class="fa-solid fa-eye"></i> Live Preview
+                        </button>
+                        <button type="button" id="btnCancelEdit" class="btn-danger" style="display:none;" onclick="resetForm()">
+                            Batal Edit
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- DAFTAR ARTIKEL TERBIT -->
+            <div class="card-panel">
+                <div class="panel-title" style="justify-content: space-between;">
+                    <span><i class="fa-solid fa-list"></i> Kelola Artikel</span>
+                    <button onclick="muatListCMS()" class="btn-sm-action btn-edit" style="width: auto;"><i class="fa-solid fa-rotate-right"></i></button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="cms-table">
+                        <thead>
+                            <tr>
+                                <th>Judul</th>
+                                <th style="width: 90px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listArtikelCMS">
+                            <tr><td colspan="2" style="text-align: center;">Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MODAL PREVIEW MOBILE -->
+    <div id="modalPreview" class="modal-overlay">
+        <div class="reading-container">
+            <button class="modal-close-btn" onclick="tutupPreview()"><i class="fa-solid fa-xmark"></i> Tutup</button>
+            
+            <div class="artikel-header-box">
+                <h1 class="artikel-detail-judul" id="prevJudul">Judul Preview</h1>
+                <div class="artikel-detail-meta" id="prevMeta">Diposting pada: -</div>
+            </div>
+            
+            <div id="prevCoverBox"></div>
+            
+            <div class="artikel-detail-isi" id="prevIsi"></div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = "https://uhecqiecfrrufrtjqzwv.supabase.co";
+        const SUPABASE_KEY = "sb_publishable__amCcBU7J54k-qWSJp4reA_rQEdgpHI";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        document.addEventListener("DOMContentLoaded", async function() {
+            if (localStorage.getItem("adminCMS_LoggedIn") === "true") {
+                tampilkanDashboard();
+            }
+        });
+
+        document.getElementById("formLogin").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById("btnLogin");
+            const email = document.getElementById("loginEmail").value.trim();
+            const pass = document.getElementById("loginPass").value.trim();
+            const remember = document.getElementById("rememberMe").checked;
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
+            btn.disabled = true;
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: pass
+            });
+
+            if (error) {
+                alert("Login Gagal: Cek email atau sandi.");
+                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Masuk Sistem';
+                btn.disabled = false;
+            } else {
+                if (remember) localStorage.setItem("adminCMS_LoggedIn", "true");
+                tampilkanDashboard();
+            }
+        });
+
+        function tampilkanDashboard() {
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("adminDashboard").style.display = "block";
+            muatListCMS(); 
+        }
+
+        async function logoutAdmin() {
+            await supabaseClient.auth.signOut();
+            localStorage.removeItem("adminCMS_LoggedIn");
+            location.reload(); 
+        }
+
+        function execCmd(cmd) { document.execCommand(cmd, false, null); }
+
+        const editor = document.getElementById("editor");
+        let coverBase64 = "";
+
+        document.getElementById("coverInput").addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    coverBase64 = e.target.result;
+                    document.getElementById("coverPreviewImg").src = coverBase64;
+                    document.getElementById("coverPreviewBox").style.display = "flex";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById("docxInput").addEventListener("change", function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                mammoth.convertToHtml({ arrayBuffer: event.target.result })
+                    .then(function(result) {
+                        editor.innerHTML = result.value;
+                        deteksiTagB();
+                    })
+                    .catch(() => alert("Gagal baca file Word!"));
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        function insertGambarManual() {
+            const caption = prompt("Caption Gambar (boleh kosong):");
+            const fileInput = document.createElement("input");
+            fileInput.type = "file";
+            fileInput.accept = "image/*";
+
+            fileInput.onchange = function() {
+                const file = fileInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imgHtml = `
+                            <figure contenteditable="false" style="max-width: 100%; margin: 10px auto; text-align: center;">
+                                <img src="${e.target.result}" alt="Gambar" style="max-width: 100%; height: auto; border-radius: 6px;">
+                                ${caption ? `<figcaption style="font-size: 12px; color: #64748b; font-style: italic; margin-top: 4px;">${caption}</figcaption>` : ''}
+                            </figure><p><br></p>`;
+                        document.execCommand('insertHTML', false, imgHtml);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            fileInput.click();
+        }
+
+        function deteksiTagB() {
+            const teks = editor.innerText;
+            const regex = /\[gambar\{([^}]+)\}\]/g;
+            let match;
+            const tagList = document.getElementById("tagList");
+            const detectorBox = document.getElementById("tagDetectorBox");
+            
+            tagList.innerHTML = "";
+            let found = false;
+
+            while ((match = regex.exec(teks)) !== null) {
+                found = true;
+                const fullTag = match[0];
+                const caption = match[1];
+
+                const item = document.createElement("div");
+                item.style.margin = "6px 0";
+                item.style.display = "flex";
+                item.style.justifyContent = "space-between";
+                item.style.alignItems = "center";
+                item.style.flexWrap = "wrap";
+                item.style.gap = "6px";
+                item.innerHTML = `
+                    <span style="font-size: 12px;">Tag: <strong>"${caption}"</strong></span>
+                    <input type="file" accept="image/*" onchange="gantiTagDenganGambar(this, '${fullTag}', '${caption}')" style="font-size: 11px;">
+                `;
+                tagList.appendChild(item);
+            }
+
+            detectorBox.style.display = found ? "block" : "none";
+        }
+
+        function gantiTagDenganGambar(input, tagCode, caption) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const figureHtml = `
+                        <figure style="max-width: 100%; margin: 10px auto; text-align: center;">
+                            <img src="${e.target.result}" alt="${caption}" style="max-width: 100%; height: auto; border-radius: 6px;">
+                            <figcaption style="font-size: 12px; color: #64748b; font-style: italic; margin-top: 4px;">${caption}</figcaption>
+                        </figure>`;
+                    editor.innerHTML = editor.innerHTML.replace(tagCode, figureHtml);
+                    deteksiTagB();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function bukaPreview() {
+            const judulVal = document.getElementById("judul").value || "Judul Preview";
+            const tanggalVal = document.getElementById("tanggal").value || "Tanggal";
+
+            document.getElementById("prevJudul").innerText = judulVal;
+            document.getElementById("prevMeta").innerText = "Diposting pada: " + tanggalVal;
+            document.getElementById("prevIsi").innerHTML = editor.innerHTML || "<p>Belum ada isi...</p>";
+            
+            const prevCoverBox = document.getElementById("prevCoverBox");
+            if (coverBase64) {
+                prevCoverBox.innerHTML = `<img src="${coverBase64}" class="artikel-detail-img">`;
+            } else {
+                prevCoverBox.innerHTML = "";
+            }
+
+            document.getElementById("modalPreview").style.display = "block";
+        }
+
+        function tutupPreview() {
+            document.getElementById("modalPreview").style.display = "none";
+        }
+
+        document.getElementById("formPost").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const editId = document.getElementById("editArticleId").value;
+            const btn = document.getElementById("btnPublish");
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+            btn.disabled = true;
+
+            const payload = {
+                judul: document.getElementById("judul").value.trim(),
+                tanggal: document.getElementById("tanggal").value.trim(),
+                penulis: "MTs Muhammadiyah Martapura",
+                isi: editor.innerHTML,
+                gambar_url: coverBase64
+            };
+
+            try {
+                if (editId) {
+                    const { error } = await supabaseClient.from('berita').update(payload).eq('id', editId);
+                    if (error) throw error;
+                    alert("Berhasil Diperbarui!");
+                } else {
+                    const { error } = await supabaseClient.from('berita').insert([payload]);
+                    if (error) throw error;
+                    alert("Berhasil Diterbitkan!");
+                }
+                resetForm();
+                muatListCMS();
+            } catch (err) {
+                alert("Gagal: " + err.message);
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Terbitkan Artikel';
+                btn.disabled = false;
+            }
+        });
+
+        async function muatListCMS() {
+            const list = document.getElementById("listArtikelCMS");
+            list.innerHTML = "<tr><td colspan='2' style='text-align:center;'>Memuat...</td></tr>";
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('berita')
+                    .select('id, judul, tanggal, isi, gambar_url')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                list.innerHTML = "";
+
+                if (!data || data.length === 0) {
+                    list.innerHTML = "<tr><td colspan='2' style='text-align:center;'>Belum ada artikel.</td></tr>";
+                    return;
+                }
+
+                data.forEach(item => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>
+                            <strong style="color:var(--admin-primary); font-size: 13px;">${item.judul}</strong><br>
+                            <small style="color:#64748b; font-size: 11px;">${item.tanggal}</small>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-sm-action btn-edit" onclick='editArtikel(${JSON.stringify(item).replace(/'/g, "&apos;")})'><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-sm-action btn-del" onclick="hapusArtikel('${item.id}')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    list.appendChild(tr);
+                });
+            } catch (err) {
+                list.innerHTML = "<tr><td colspan='2' style='text-align:center; color:red;'>Gagal muat data.</td></tr>";
+            }
+        }
+
+        function editArtikel(item) {
+            document.getElementById("editArticleId").value = item.id;
+            document.getElementById("judul").value = item.judul;
+            document.getElementById("tanggal").value = item.tanggal;
+            editor.innerHTML = item.isi;
+            coverBase64 = item.gambar_url || "";
+            
+            if (coverBase64) {
+                document.getElementById("coverPreviewImg").src = coverBase64;
+                document.getElementById("coverPreviewBox").style.display = "flex";
+            } else {
+                document.getElementById("coverPreviewBox").style.display = "none";
+            }
+
+            document.getElementById("btnPublish").innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan';
+            document.getElementById("btnCancelEdit").style.display = "flex";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function hapusArtikel(id) {
+            if (confirm("Hapus artikel ini?")) {
+                try {
+                    const { error } = await supabaseClient.from('berita').delete().eq('id', id);
+                    if (error) throw error;
+                    alert("Terhapus.");
+                    muatListCMS();
+                } catch (err) {
+                    alert("Gagal hapus.");
+                }
+            }
+        }
+
+        function resetForm() {
+            document.getElementById("editArticleId").value = "";
+            document.getElementById("formPost").reset();
+            editor.innerHTML = "";
+            coverBase64 = "";
+            document.getElementById("coverPreviewBox").style.display = "none";
+            document.getElementById("btnPublish").innerHTML = '<i class="fa-solid fa-paper-plane"></i> Terbitkan Artikel';
+            document.getElementById("btnCancelEdit").style.display = "none";
+        }
+    </script>
+</body>
+</html>

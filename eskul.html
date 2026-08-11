@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekstrakulikuler - MTs Muhammadiyah Martapura</title>
+
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-header-banner {
+            background-color: var(--biru-muh);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .page-header-banner h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .page-header-banner p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* GRID ESKUL (2 KOLOM RESPONSIVE) */
+        .eskul-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .eskul-card {
+            background-color: var(--bg-card);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, background-color 0.2s;
+            overflow: hidden;
+        }
+
+        .eskul-card:hover {
+            transform: translateY(-4px);
+            background-color: #e2f1f8;
+        }
+
+       .eskul-img-box {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.eskul-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+        .eskul-content {
+            padding: 22px;
+        }
+
+        .eskul-title {
+            color: var(--biru-muh);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #d0e3ec;
+            padding-bottom: 8px;
+        }
+
+        .eskul-desc {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .eskul-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVBAR -->
+    <nav class="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Logo MTs Muhammadiyah">
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="profil.html">Profil Sekolah</a></li>
+                <li><a href="https://linktr.ee/mtsmuhmtp" target="_blank" class="btn-ppdb">PPDB</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Tenaga Pendidik Dan Kependidikan▼</a>
+                    <div class="dropdown-content">
+                        <a href="struktur.html">Struktur Organisasi</a>
+                        <a href="pendidik.html">Tenaga Pendidik Dan Kependidikan</a>
+                    </div>
+                </li>
+                <li><a href="sarpras.html">Sarana Prasarana</a></li>
+                <li><a href="eskul.html" class="active">Ekstrakulikuler</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 2. HEADER BANNER -->
+    <section class="page-header-banner">
+        <h1>EKSTRAKULIKULER</h1>
+      
+    </section>
+
+    <!-- 3. KONTEN UTAMA (2 ESKUL UTAMA) -->
+    <main class="section-container">
+        <div class="eskul-grid">
+            
+            <!-- ESKUL 1: HIZBUL WATHAN -->
+            <div class="eskul-card">
+                <div class="eskul-img-box">
+                    <img src="assets/hw.png" alt="Gerakan Kepanduan Hizbul Wathan">
+                </div>
+                <div class="eskul-content">
+                    <h3 class="eskul-title">
+                        Hizbul Wathan (HW)
+                    </h3>
+                    <p class="eskul-desc">
+                        Melatih disiplin, kepemimpinan, dan kemandirian siswa.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ESKUL 2: TAPAK SUCI -->
+            <div class="eskul-card">
+                <div class="eskul-img-box">
+                    <img src="assets/tapaksuci.png" alt="Tapak Suci Putera Muhammadiyah">
+                </div>
+                <div class="eskul-content">
+                    <h3 class="eskul-title">
+                      Tapak Suci  Muhammadiyah
+                    </h3>
+                    <p class="eskul-desc">
+                        Melatih bela diri, mental, dan membentuk karakter siswa.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 4. FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <img src="assets/logo-putih.png" alt="Logo Bawah" class="footer-logo">
+                    <p>Jl. Kertak Baru, RT.004/RW.02, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan 70651</p>
+                    <p>Email: mtsmuhammadiyahmartapura@gmail.com</p>
+                    
+                    <div class="social-links">
+                        <p><strong>Ikuti Kami:</strong></p>
+                        <a href="https://instagram.com/mtsmuhmtp" target="_blank" class="btn-sosmed">Instagram</a>
+                    </div>
+                </div>
+                
+                <div class="footer-maps">
+                    <p style="margin-bottom: 10px; font-weight: bold;">Peta Lokasi:</p>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?q=Mts%20Muhammadiyah%20Martapura&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" width="100%" height="200" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 MTs Muhammadiyah Martapura
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>

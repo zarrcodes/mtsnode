@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Sekolah - MTs Muhammadiyah Martapura</title>
+
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .profil-header-banner {
+            background-color: var(--biru-muh);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .profil-header-banner h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .profil-header-banner p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .profil-card {
+            background-color: var(--bg-card);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .profil-card-title {
+            color: var(--biru-muh);
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #d0e3ec;
+            padding-bottom: 8px;
+        }
+
+        .profil-text {
+            font-size: 14.5px;
+            line-height: 1.75;
+            color: #333;
+            text-align: justify;
+        }
+
+        /* VISI & MISI GRID RESPONSIVE */
+        .vm-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .misi-list, .tujuan-list {
+            padding-left: 18px;
+            margin-top: 8px;
+        }
+
+        .misi-list li, .tujuan-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* TABEL TENTANG KAMI MOBILE & PC FRIENDLY */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .identitas-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 480px; /* Menjaga keterbacaan di layar sangat kecil */
+        }
+
+        .identitas-table tr {
+            border-bottom: 1px solid #d0e3ec;
+        }
+
+        .identitas-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .identitas-table td {
+            padding: 12px 10px;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        .identitas-table td.label-col {
+            font-weight: bold;
+            color: var(--biru-muh);
+            width: 30%;
+            white-space: nowrap;
+        }
+
+        .identitas-table tr:nth-child(even) {
+            background-color: #e6f3f8;
+        }
+
+        /* RESPONSIVE MOBILE ADJUSTMENT */
+        @media (max-width: 768px) {
+            .vm-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .profil-card {
+                padding: 18px;
+            }
+            .identitas-table td.label-col {
+                width: 40%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVBAR -->
+    <nav class="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Logo MTs Muhammadiyah">
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="profil.html" class="active">Profil Sekolah</a></li>
+                <li><a href="https://linktr.ee/mtsmuhmtp" target="_blank" class="btn-ppdb">PPDB</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Tenaga Pendidik Dan Kependidikan▼</a>
+                    <div class="dropdown-content">
+                        <a href="struktur.html">Struktur Organisasi</a>
+                        <a href="pendidik.html">Tenaga Pendidik Dan Kependidikan</a>
+                    </div>
+                </li>
+                <li><a href="sarpras.html">Sarana Prasarana</a></li>
+                <li><a href="eskul.html">Ekstrakulikuler</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 2. HEADER BANNER -->
+    <section class="profil-header-banner">
+        <h1>PROFIL SEKOLAH</h1>
+        <p>MTs Muhammadiyah Martapura</p>
+    </section>
+
+    <!-- 3. KONTEN UTAMA -->
+    <main class="section-container">
+        
+        <!-- VISI & MISI -->
+        <div class="vm-grid">
+            <div class="profil-card" style="margin-bottom: 0;">
+                <h2 class="profil-card-title">
+                   Visi Madradah
+                </h2>
+                <p class="profil-text">
+                    TERWUJUDNYA GENERASI ISLAM YANG SEBENAR-BENARNYA, BERKARAKTER, BERAKHLAK MULIA, UNGGUL DALAM IPTEK, KREATIF DAN PEDULI LINGKUNGAN.
+                </p>
+            </div>
+
+            <div class="profil-card" style="margin-bottom: 0;">
+                <h2 class="profil-card-title">
+                     Misi Madrasah
+                </h2>
+                <ol class="misi-list">
+                    <li>MENDIDIK PESERTA DIDIK BERAQIDAH KUAT, RAJIN BERIBADAH DAN FASIH MEMBACA AL-QUR'AN.</li>
+                    <li>MEMBENTUK PESERTA DIDIK YANG BERAKHLAKUL KARIMAH.</li>
+                    <li>MENDIDIK PESERTA DIDIK MEMILIKI KEMAMPUAN IPTEK, BAHASA, DAN OLAH RAGA.</li>
+                    <li>MEMILIKI PRESTASI AKADEMIK DAN NON AKADEMIK.</li>
+                    <li>MENDIDIK SISWA UNTUK CINTA ALLAH DAN RASULNYA, KEBERSIHAN, KEINDAHAN, KESEHATAN, KEDISIPLINAN, KEJUJURAN, SESAMA, ILMU, LINGKUNGAN, TANAH AIR DAN BANGSA.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- TUJUAN SEKOLAH -->
+        <div class="profil-card">
+            <h2 class="profil-card-title">
+                Tujuan Sekolah (Jangka Pendek, Jangka Menengah dan Jangka Panjang)
+            </h2>
+            <ul class="tujuan-list">
+                <li>PEMBENTUKAN KARAKTER, AKHLAK, PEMBUDAYAAN LITERASI, PEMBEKALAN UNTUK TKA, ANBK, OSN, PEMBINAAN SIFAT JUJUR, BERTANGGUNG JAWAB, PENGOPTIMALAN SAPRAS.</li>
+                <li>PEMBENTUKAN KARAKTER PELAJAR SEPANJANG HAYAT, PEMBEKALAN PROGRAM LIFE SKILL, MELATIH SISWA DALAM TIK, MERANCANG PEMBELAJARAN SESUAI POTENSI SISWA, MELAKSANAKAN SISTEM PENILAIAN YANG AKUNTABEL, MENJALIN KERJASAMA DENGAN BERBAGAI PIHAK.</li>
+                <li>MENGHASILKAN LULUSAN PEMBELAJARAN SEPANJANG HAYAT YANG BERIMAN, BERTAQWA, BERKARAKTER; MENGHASILKAN LULUSAN YANG MAMPU MELANJUTKAN KE JENJANG LEBIH TINGGI, MENGHASILKAN LULUSAN TERAMPIL DALAM BERPIKIR KRITIS, MENGHASILKAN LULUSAN YANG FASIH MEMBACA AL-QUR'AN, DAN MENGHASILKAN LULUSAN YANG SIAP KERJA DENGAN PROGRAM LIFE SKILL.</li>
+               
+            </ul>
+        </div>
+
+        <!-- TENTANG KAMI (TABEL IDENTITAS) -->
+        <div class="profil-card">
+            <h2 class="profil-card-title">
+                <i class="fa-solid fa-circle-info"></i> Tentang Kami
+            </h2>
+            <div class="table-responsive">
+                <table class="identitas-table">
+                    <tr>
+                        <td class="label-col">Nama Sekolah</td>
+                        <td>: MTs Muhammadiyah Martapura</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Akreditasi Madrasah</td>
+                        <td>: B</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Kepala Madrasah</td>
+                        <td>: Rahman Ansyari, S.Pd.</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Jenjang Pendidikan</td>
+                        <td>: Madrasah Tsanawiyah (Setara SMP)</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Alamat Lengkap</td>
+                        <td>: Jl. Kertak Baru, RT.004/RW.02, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan 70651</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Kontak / Email</td>
+                        <td>:mtsmuhammadiyahmartapura@gmail.com</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 4. FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <img src="assets/logo-putih.png" alt="Logo Bawah" class="footer-logo">
+                    <p>Jl. Kertak Baru, RT.004/RW.02, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan 70651</p>
+                    <p>Email: mtsmuhammadiyahmartapura@gmail.com</p>
+                    
+                    <div class="social-links">
+                        <p><strong>Ikuti Kami:</strong></p>
+                        <a href="https://instagram.com/mtsmuhmtp" target="_blank" class="btn-sosmed">Instagram</a>
+                    </div>
+                </div>
+                
+                <div class="footer-maps">
+                    <p style="margin-bottom: 10px; font-weight: bold;">Peta Lokasi:</p>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?q=Mts%20Muhammadiyah%20Martapura&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" width="100%" height="200" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 MTs Muhammadiyah Martapura
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arsip Semua Berita - MTs Muhammadiyah Martapura</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="desktop-wrapper">
+        <!-- HEADER BANNER -->
+        <header class="header-banner">
+            <a href="index.html">
+                <img src="assets/banner.png" alt="Header MTs Muhammadiyah Martapura" class="banner-img" onerror="this.src='https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80'">
+            </a>
+        </header>
+
+        <!-- MAIN NAVBAR -->
+        <nav class="main-navbar">
+            <ul class="nav-list">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="arsip.html" class="active">Arsip Berita</a></li>
+                <li><a href="#">Profil</a></li>
+                <li><a href="#">PPDB</a></li>
+                <li><a href="#">Perangkat Pembelajaran</a></li>
+                <li><a href="#">Tenaga Pendidik</a></li>
+                <li><a href="#">Sarana Prasarana</a></li>
+                <li><a href="#">Tentang Kami</a></li>
+            </ul>
+        </nav>
+
+        <!-- LAYOUT UTAMA -->
+        <div class="main-body-layout">
+            
+            <!-- KONTEN ARSIP & PAGINATION -->
+            <main class="content-stream">
+                <div class="post-item" style="background:#3b82c4; color:#fff; font-weight:bold; margin-bottom:15px;">
+                    📚 Arsip Seluruh Berita & Pengumuman Sekolah
+                </div>
+
+                <!-- Tempat List Arsip Berita -->
+                <div id="arsipContainer">
+                    <p style="padding: 20px; text-align: center;">Memuat seluruh arsip berita...</p>
+                </div>
+
+                <!-- PAGINATION ALA DIREKTORI (1, 2, 3...) -->
+                <div id="paginationContainer" class="pagination-box" style="display:flex; justify-content:center; gap:6px; margin: 20px 0; flex-wrap:wrap;">
+                    <!-- Tombol angka akan di-generate otomatis oleh JavaScript -->
+                </div>
+            </main>
+
+            <!-- SIDEBAR KANAN -->
+            <aside class="sidebar-right-column">
+                <div class="sidebar-widget text-center">
+                    <div class="widget-header">MENU UTAMA</div>
+                    <a href="index.html" class="blue-link-bold" style="display:block; padding:8px; text-decoration:none;">Beranda</a>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbxplgh0uZgSdNltxp2Qw4-SgF9qkdViW5vrlppS-FYN_Rt7hZA2w1aqTlvdCVpNzxeY/exec";
+        const PER_PAGE = 5; // Jumlah artikel per halaman di arsip
+        let currentPage = 1;
+        let semuaBerita = [];
+
+        function formatTanggalIndonesia(tanggalRaw) {
+            if (!tanggalRaw) return "";
+            if (tanggalRaw.toString().includes("T") || !isNaN(Date.parse(tanggalRaw))) {
+                const d = new Date(tanggalRaw);
+                if (!isNaN(d.getTime())) {
+                    return d.toLocaleDateString("id-ID", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                }
+            }
+            return tanggalRaw;
+        }
+
+        async function muatArsip() {
+            try {
+                const res = await fetch(GOOGLE_API_URL);
+                semuaBerita = await res.json();
+                
+                if (!Array.isArray(semuaBerita) || semuaBerita.length === 0) {
+                    document.getElementById("arsipContainer").innerHTML = "<p style='padding:20px; text-align:center;'>Belum ada arsip berita.</p>";
+                    return;
+                }
+
+                tampilkanHalaman(1);
+            } catch (err) {
+                document.getElementById("arsipContainer").innerHTML = "<p style='padding:20px; text-align:center; color:red;'>Gagal memuat data arsip.</p>";
+            }
+        }
+
+        function tampilkanHalaman(page) {
+            currentPage = page;
+            const container = document.getElementById("arsipContainer");
+            container.innerHTML = "";
+
+            const mulai = (page - 1) * PER_PAGE;
+            const selesai = mulai + PER_PAGE;
+            const dataHalaman = semuaBerita.slice(mulai, selesai);
+
+            dataHalaman.forEach(post => {
+                const articleBox = document.createElement("article");
+                articleBox.className = "post-item";
+
+                let gambarHTML = "";
+                if (post.gambar_url && post.gambar_url.toString().trim() !== "") {
+                    gambarHTML = `<div style="text-align: center; margin: 12px 0;"><img src="${post.gambar_url}" alt="${post.judul}" class="post-featured-img" style="max-width:100%; height:auto; border-radius:8px;"></div>`;
+                }
+
+                let formatIsi = post.isi ? post.isi.toString() : '';
+                let tanggalRapi = formatTanggalIndonesia(post.tanggal);
+
+                articleBox.innerHTML = `
+                    <div class="post-header-date">${tanggalRapi}</div>
+                    <h2 class="post-title"><a href="#">${post.judul}</a></h2>
+                    ${gambarHTML}
+                    <div class="post-content">
+                        <div style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.6;">${formatIsi}</div>
+                    </div>
+                    <div class="post-meta-footer">
+                        <span>Diposting oleh <strong class="author-name">${post.penulis || "MTs Muhammadiyah Martapura"}</strong></span>
+                        <span class="comment-status">Arsip</span>
+                    </div>
+                `;
+                container.appendChild(articleBox);
+            });
+
+            renderPaginationControls();
+        }
+
+        function renderPaginationControls() {
+            const paginationEl = document.getElementById("paginationContainer");
+            paginationEl.innerHTML = "";
+
+            const totalPages = Math.ceil(semuaBerita.length / PER_PAGE);
+            if (totalPages <= 1) return;
+
+            // Tombol Prev
+            if (currentPage > 1) {
+                paginationEl.appendChild(buatTombolPage("« Prev", currentPage - 1));
+            }
+
+            // Tombol Nomor Halaman (Ala Direktori / Pornhub style)
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = buatTombolPage(i, i);
+                if (i === currentPage) {
+                    btn.style.background = "#3b82c4";
+                    btn.style.color = "#fff";
+                    btn.style.borderColor = "#20598f";
+                }
+                paginationEl.appendChild(btn);
+            }
+
+            // Tombol Next
+            if (currentPage < totalPages) {
+                paginationEl.appendChild(buatTombolPage("Next »", currentPage + 1));
+            }
+        }
+
+        function buatTombolPage(label, targetPage) {
+            const btn = document.createElement("button");
+            btn.innerText = label;
+            btn.style.cssText = "padding: 8px 14px; background: #fff; border: 1px solid #b2c9d8; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; color: #333;";
+            btn.onmouseover = () => { if(targetPage !== currentPage) btn.style.background = "#f0f4f8"; };
+            btn.onmouseout = () => { if(targetPage !== currentPage) btn.style.background = "#fff"; };
+            btn.onclick = () => {
+                tampilkanHalaman(targetPage);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            return btn;
+        }
+
+        document.addEventListener("DOMContentLoaded", muatArsip);
+    </script>
+</body>
+</html>

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin CMS - MTs Muhammadiyah Martapura</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Utama Web -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase & Mammoth JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+    <style>
+        :root {
+            --admin-bg: #f8fafc;
+            --admin-primary: #0b3663;
+            --admin-primary-hover: #06213e;
+            --admin-border: #e2e8f0;
+            --admin-text: #1e293b;
+        }
+
+        body {
+            background-color: var(--admin-bg);
+            color: var(--admin-text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           LOGIN SYSTEM UI
+           ========================================= */
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .login-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--admin-primary);
+            margin-bottom: 5px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .login-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           ADMIN DASHBOARD UI
+           ========================================= */
+        .admin-dashboard {
+            display: none; /* Sembunyikan sebelum login */
+            padding: 24px;
+        }
+
+        .admin-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 20px 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin-bottom: 24px;
+            border: 1px solid var(--admin-border);
+        }
+
+        .admin-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--admin-primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .admin-grid { grid-template-columns: 1fr; }
+        }
+
+        .card-panel {
+            background: #ffffff;
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid var(--admin-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin-bottom: 24px;
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--admin-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+        
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .input-text {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--admin-border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            background: #f8fafc;
+            box-sizing: border-box;
+        }
+
+        .input-text:focus {
+            border-color: var(--admin-primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(11, 54, 99, 0.1);
+        }
+
+        .docx-dropzone {
+            border: 2px dashed #94a3b8;
+            background: #f1f5f9;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .docx-dropzone:hover {
+            border-color: var(--admin-primary);
+            background: #e2e8f0;
+        }
+
+        .editor-container {
+            border: 1.5px solid var(--admin-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .editor-toolbar {
+            background: #f1f5f9;
+            padding: 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 1.5px solid var(--admin-border);
+        }
+
+        .btn-tool {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-tool:hover {
+            background: var(--admin-primary);
+            color: #ffffff;
+        }
+
+        /* PERBAIKAN BUG GAMBAR & SPASI DI EDITOR */
+        .editor-workspace {
+            min-height: 400px;
+            padding: 18px;
+            background: #ffffff;
+            outline: none;
+            font-size: 15px;
+            line-height: 1.8;
+            white-space: pre-wrap; 
+            overflow-x: hidden; /* Mencegah konten keluar ke samping */
+        }
+
+        .editor-workspace p { margin-bottom: 1.2rem !important; }
+        
+        /* MENCEGAH GAMBAR KELUAR BATAS EDITOR */
+        .editor-workspace img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .editor-workspace figure {
+            max-width: 100%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .cover-preview-box {
+            margin-top: 12px;
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #e2e8f0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: var(--admin-primary);
+            color: #ffffff;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover { background: var(--admin-primary-hover); }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1.5px solid #cbd5e1;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover { background: #e2e8f0; }
+        
+        .btn-danger {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1.5px solid #fca5a5;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-danger:hover { background: #fecaca; }
+
+        .cms-table { width: 100%; border-collapse: collapse; }
+        .cms-table th { text-align: left; padding: 12px; background: #f8fafc; color: #64748b; font-size: 12px; font-weight: 700; border-bottom: 1px solid var(--admin-border); }
+        .cms-table td { padding: 14px 12px; border-bottom: 1px solid #f1f5f9; font-size: 13.5px; }
+
+        .action-btns { display: flex; gap: 6px; }
+        .btn-sm-action { padding: 6px 10px; border-radius: 6px; border: none; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .btn-edit { background: #e0f2fe; color: #0369a1; }
+        .btn-del { background: #fee2e2; color: #dc2626; }
+
+        /* =========================================
+           MODAL PREVIEW IDENTIK 100% ARTIKEL.HTML
+           ========================================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 30px 15px;
+        }
+
+        /* Container membaca identik dengan artikel.html */
+        .reading-container {
+            max-width: 780px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 45px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ef4444;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Tipografi Identik artikel.html */
+        .artikel-header-box { margin-bottom: 30px; text-align: left; }
+        .artikel-detail-judul {
+            font-size: 34px !important;
+            font-weight: 800 !important;
+            color: #0f172a;
+            line-height: 1.35 !important;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        .artikel-detail-meta {
+            font-size: 13.5px;
+            color: #64748b;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .artikel-detail-img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .artikel-detail-isi { font-size: 17.5px; line-height: 1.85; color: #334155; text-align: left; }
+        .artikel-detail-isi p { margin-bottom: 1.6rem !important; }
+        .artikel-detail-isi strong, .artikel-detail-isi b { font-weight: 700; color: #0f172a; }
+        .artikel-detail-isi figure { margin: 35px auto; text-align: center; max-width: 100%; }
+        .artikel-detail-isi figure img { border-radius: 8px; max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .artikel-detail-isi figcaption { font-size: 13px; color: #64748b; font-style: italic; margin-top: 10px; }
+
+        @media (max-width: 600px) {
+            .reading-container { padding: 25px 20px; }
+            .artikel-detail-judul { font-size: 26px !important; }
+            .artikel-detail-isi { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         HALAMAN LOGIN (IN-PAGE)
+         ========================================== -->
+    <div id="loginScreen" class="login-wrapper">
+        <div class="login-card">
+            <i class="fa-solid fa-shield-halved fa-4x" style="color: var(--admin-primary); margin-bottom: 15px;"></i>
+            <h2 class="login-title">Admin Studio</h2>
+            <p class="login-subtitle">Masukkan Email & Sandi untuk mengelola CMS</p>
+            
+            <form id="formLogin">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" class="input-text" placeholder="Email Admin..." required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPass" class="input-text" placeholder="Kata Sandi..." required>
+                </div>
+                
+                <label class="login-checkbox-group">
+                    <input type="checkbox" id="rememberMe"> Ingat Saya (Tetap Login)
+                </label>
+
+                <button type="submit" id="btnLogin" class="btn-primary" style="width: 100%;">
+                    <i class="fa-solid fa-right-to-bracket"></i> Masuk Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         DASHBOARD UTAMA (MUNCUL SETELAH LOGIN)
+         ========================================== -->
+    <div id="adminDashboard" class="admin-dashboard">
+        <div class="admin-container">
+            
+            <!-- HEADER -->
+            <header class="admin-header">
+                <h1 class="admin-title">
+                    <i class="fa-solid fa-feather-pointed"></i> CMS Studio Artikel
+                </h1>
+                <div class="header-actions">
+                    <a href="index.html" target="_blank" class="btn-secondary">
+                        <i class="fa-solid fa-globe"></i> Buka Website
+                    </a>
+                    <button class="btn-danger" onclick="logoutAdmin()">
+                        <i class="fa-solid fa-power-off"></i> Keluar
+                    </button>
+                </div>
+            </header>
+
+            <div class="admin-grid">
+                <!-- EDITOR PANEL -->
+                <div class="main-panel">
+                    <div class="card-panel">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-pen-to-square"></i> Tulis & Edit Artikel
+                        </div>
+
+                        <!-- IMPORT FILE WORD -->
+                        <div class="form-group">
+                            <label class="docx-dropzone" for="docxInput">
+                                <i class="fa-solid fa-file-word fa-2x" style="color: #2b579a; margin-bottom: 8px;"></i>
+                                <div style="font-weight: 700; font-size: 14px;">Klik / Drop File Word (.docx) di Sini</div>
+                                <div style="font-size: 12px; color: #64748b;">Teks, Bold, Italic, & Spasi Otomatis Masuk</div>
+                                <input type="file" id="docxInput" accept=".docx" style="display: none;">
+                            </label>
+                        </div>
+
+                        <form id="formPost">
+                            <input type="hidden" id="editArticleId" value="">
+
+                            <div class="form-group">
+                                <label>Judul Artikel</label>
+                                <input type="text" id="judul" class="input-text" placeholder="Masukkan judul artikel..." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tanggal Diposting</label>
+                                <input type="text" id="tanggal" class="input-text" placeholder="Contoh: Sabtu, 1 Agustus 2026" required>
+                            </div>
+
+                            <!-- WYSIWYG EDITOR -->
+                            <div class="form-group">
+                                <label>Isi Konten Artikel</label>
+                                <div class="editor-container">
+                                    <div class="editor-toolbar">
+                                        <button type="button" class="btn-tool" onclick="execCmd('bold')"><i class="fa-solid fa-bold"></i> Tebal</button>
+                                        <button type="button" class="btn-tool" onclick="execCmd('italic')"><i class="fa-solid fa-italic"></i> Miring</button>
+                                        <button type="button" class="btn-tool" onclick="insertGambarManual()"><i class="fa-solid fa-image"></i> Sisipkan Gambar + Caption</button>
+                                        <button type="button" class="btn-tool" onclick="deteksiTagB()"><i class="fa-solid fa-magnifying-glass"></i> Scan Tag [gambar{...}]</button>
+                                    </div>
+                                    <div id="editor" class="editor-workspace" contenteditable="true"></div>
+                                </div>
+                            </div>
+
+                            <!-- TAG DETECTOR -->
+                            <div id="tagDetectorBox" style="display:none; background:#fff8e6; border: 1px solid #fde68a; padding:15px; border-radius:8px; margin-bottom:20px;">
+                                <strong style="color: #d97706;"><i class="fa-solid fa-triangle-exclamation"></i> Terdeteksi Tag Gambar!</strong>
+                                <div id="tagList" style="margin-top: 10px;"></div>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="submit" id="btnPublish" class="btn-primary">
+                                    <i class="fa-solid fa-paper-plane"></i> Terbitkan Artikel
+                                </button>
+                                <button type="button" class="btn-secondary" onclick="bukaPreview()">
+                                    <i class="fa-solid fa-eye"></i> Live Preview
+                                </button>
+                                <button type="button" id="btnCancelEdit" class="btn-danger" style="display:none;" onclick="resetForm()">
+                                    Batal Edit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- SIDEBAR PANEL -->
+                <div class="side-panel">
+                    <!-- COVER UPLOAD -->
+                    <div class="card-panel">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-image"></i> Gambar Cover Utama
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="coverInput" accept="image/*" class="input-text">
+                            <div id="coverPreviewBox" class="cover-preview-box">
+                                <img id="coverPreviewImg" src="" alt="Preview Cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DAFTAR ARTIKEL -->
+                    <div class="card-panel">
+                        <div class="panel-title" style="justify-content: space-between;">
+                            <span><i class="fa-solid fa-list"></i> Artikel Diterbitkan</span>
+                            <button onclick="muatListCMS()" class="btn-sm-action btn-edit" title="Refresh Data"><i class="fa-solid fa-rotate-right"></i></button>
+                        </div>
+
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            <table class="cms-table">
+                                <thead>
+                                    <tr>
+                                        <th>Judul Artikel</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listArtikelCMS">
+                                    <tr><td colspan="2" style="text-align: center;">Memuat artikel...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL PREVIEW IDENTIK 100% ARTIKEL.HTML
+         ========================================== -->
+    <div id="modalPreview" class="modal-overlay">
+        <!-- Container Baca Persis seperti Artikel HTML -->
+        <div class="reading-container">
+            <button class="modal-close-btn" onclick="tutupPreview()"><i class="fa-solid fa-xmark"></i> Tutup</button>
+            
+            <div class="artikel-header-box">
+                <h1 class="artikel-detail-judul" id="prevJudul">Judul Preview</h1>
+                <div class="artikel-detail-meta" id="prevMeta">Diposting pada: -</div>
+            </div>
+            
+            <div id="prevCoverBox"></div>
+            
+            <div class="artikel-detail-isi" id="prevIsi"></div>
+        </div>
+    </div>
+
+    <script>
+        // KONFIGURASI SUPABASE
+        const SUPABASE_URL = "https://uhecqiecfrrufrtjqzwv.supabase.co";
+        const SUPABASE_KEY = "sb_publishable__amCcBU7J54k-qWSJp4reA_rQEdgpHI";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ==========================================
+        // SISTEM LOGIN & LOCAL STORAGE
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", async function() {
+            // Cek apakah ada sesi "Ingat Saya" di LocalStorage
+            if (localStorage.getItem("adminCMS_LoggedIn") === "true") {
+                tampilkanDashboard();
+            }
+        });
+
+        document.getElementById("formLogin").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById("btnLogin");
+            const email = document.getElementById("loginEmail").value.trim();
+            const pass = document.getElementById("loginPass").value.trim();
+            const remember = document.getElementById("rememberMe").checked;
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
+            btn.disabled = true;
+
+            // Autentikasi pakai Supabase Auth
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: pass
+            });
+
+            if (error) {
+                alert("Gagal Login: Email atau Kata Sandi salah.");
+                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Masuk Dashboard';
+                btn.disabled = false;
+            } else {
+                if (remember) {
+                    localStorage.setItem("adminCMS_LoggedIn", "true");
+                }
+                tampilkanDashboard();
+            }
+        });
+
+        function tampilkanDashboard() {
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("adminDashboard").style.display = "block";
+            muatListCMS(); // Load data artikel pas berhasil masuk
+        }
+
+        async function logoutAdmin() {
+            await supabaseClient.auth.signOut();
+            localStorage.removeItem("adminCMS_LoggedIn");
+            location.reload(); // Refresh kembali ke halaman login
+        }
+
+        // ==========================================
+        // FITUR CMS EDITOR & DATABASE
+        // ==========================================
+        function execCmd(cmd) { document.execCommand(cmd, false, null); }
+
+        const editor = document.getElementById("editor");
+        let coverBase64 = "";
+
+        // LIVE PREVIEW COVER UPLOAD
+        document.getElementById("coverInput").addEventListener("change", function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    coverBase64 = e.target.result;
+                    document.getElementById("coverPreviewImg").src = coverBase64;
+                    document.getElementById("coverPreviewBox").style.display = "flex";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // IMPORT FILE WORD (.DOCX) DENGAN MAMMOTH
+        document.getElementById("docxInput").addEventListener("change", function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                mammoth.convertToHtml({ arrayBuffer: event.target.result })
+                    .then(function(result) {
+                        editor.innerHTML = result.value;
+                        deteksiTagB();
+                    })
+                    .catch(() => alert("Gagal membaca file Word!"));
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        // FIX BUG INSERT GAMBAR MANUAL (MENCEGAH KELUAR BATAS)
+        function insertGambarManual() {
+            const caption = prompt("Masukkan Caption Keterangan Gambar (boleh kosong):");
+            const fileInput = document.createElement("input");
+            fileInput.type = "file";
+            fileInput.accept = "image/*";
+
+            fileInput.onchange = function() {
+                const file = fileInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Inline CSS agar gambar tidak overflow
+                        const imgHtml = `
+                            <figure contenteditable="false" style="max-width: 100%; margin: 25px auto; text-align: center;">
+                                <img src="${e.target.result}" alt="Gambar Artikel" style="max-width: 100%; height: auto; border-radius: 8px;">
+                                ${caption ? `<figcaption style="font-size: 13px; color: #64748b; font-style: italic; margin-top: 10px;">${caption}</figcaption>` : ''}
+                            </figure><p><br></p>`;
+                        document.execCommand('insertHTML', false, imgHtml);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            fileInput.click();
+        }
+
+        // DETEKSI TAG [gambar{caption}]
+        function deteksiTagB() {
+            const teks = editor.innerText;
+            const regex = /\[gambar\{([^}]+)\}\]/g;
+            let match;
+            const tagList = document.getElementById("tagList");
+            const detectorBox = document.getElementById("tagDetectorBox");
+            
+            tagList.innerHTML = "";
+            let found = false;
+
+            while ((match = regex.exec(teks)) !== null) {
+                found = true;
+                const fullTag = match[0];
+                const caption = match[1];
+
+                const item = document.createElement("div");
+                item.style.margin = "8px 0";
+                item.style.display = "flex";
+                item.style.justifyContent = "space-between";
+                item.style.alignItems = "center";
+                item.innerHTML = `
+                    <span>Tag Caption: <strong>"${caption}"</strong></span>
+                    <input type="file" accept="image/*" onchange="gantiTagDenganGambar(this, '${fullTag}', '${caption}')">
+                `;
+                tagList.appendChild(item);
+            }
+
+            detectorBox.style.display = found ? "block" : "none";
+        }
+
+        function gantiTagDenganGambar(input, tagCode, caption) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Penyesuaian batas gambar (max-width)
+                    const figureHtml = `
+                        <figure style="max-width: 100%; margin: 25px auto; text-align: center;">
+                            <img src="${e.target.result}" alt="${caption}" style="max-width: 100%; height: auto; border-radius: 8px;">
+                            <figcaption style="font-size: 13px; color: #64748b; font-style: italic; margin-top: 10px;">${caption}</figcaption>
+                        </figure>`;
+                    editor.innerHTML = editor.innerHTML.replace(tagCode, figureHtml);
+                    deteksiTagB();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // LIVE PREVIEW MODAL IDENTIK ARTIKEL.HTML
+        function bukaPreview() {
+            const judulVal = document.getElementById("judul").value || "Judul Artikel Preview";
+            const tanggalVal = document.getElementById("tanggal").value || "Tanggal Hari Ini";
+
+            document.getElementById("prevJudul").innerText = judulVal;
+            document.getElementById("prevMeta").innerText = "Diposting pada: " + tanggalVal + " | Oleh: MTs Muhammadiyah Martapura";
+            document.getElementById("prevIsi").innerHTML = editor.innerHTML || "<p>Belum ada isi artikel...</p>";
+            
+            const prevCoverBox = document.getElementById("prevCoverBox");
+            if (coverBase64) {
+                prevCoverBox.innerHTML = `<img src="${coverBase64}" class="artikel-detail-img">`;
+            } else {
+                prevCoverBox.innerHTML = "";
+            }
+
+            document.getElementById("modalPreview").style.display = "block";
+        }
+
+        function tutupPreview() {
+            document.getElementById("modalPreview").style.display = "none";
+        }
+
+        // PUBLISH & UPDATE ARTIKEL TO SUPABASE
+        document.getElementById("formPost").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const editId = document.getElementById("editArticleId").value;
+            const btn = document.getElementById("btnPublish");
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+            btn.disabled = true;
+
+            const payload = {
+                judul: document.getElementById("judul").value.trim(),
+                tanggal: document.getElementById("tanggal").value.trim(),
+                penulis: "MTs Muhammadiyah Martapura",
+                isi: editor.innerHTML,
+                gambar_url: coverBase64
+            };
+
+            try {
+                if (editId) {
+                    const { error } = await supabaseClient.from('berita').update(payload).eq('id', editId);
+                    if (error) throw error;
+                    alert("Artikel Berhasil Diperbarui!");
+                } else {
+                    const { error } = await supabaseClient.from('berita').insert([payload]);
+                    if (error) throw error;
+                    alert("Artikel Berhasil Diterbitkan!");
+                }
+                resetForm();
+                muatListCMS();
+            } catch (err) {
+                alert("Gagal menyimpan: " + err.message);
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Terbitkan Artikel';
+                btn.disabled = false;
+            }
+        });
+
+        // FETCH DATA CMS LIST TERBIT
+        async function muatListCMS() {
+            const list = document.getElementById("listArtikelCMS");
+            list.innerHTML = "<tr><td colspan='2' style='text-align:center;'>Memuat data...</td></tr>";
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('berita')
+                    .select('id, judul, tanggal, isi, gambar_url')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                list.innerHTML = "";
+
+                if (!data || data.length === 0) {
+                    list.innerHTML = "<tr><td colspan='2' style='text-align:center;'>Belum ada artikel.</td></tr>";
+                    return;
+                }
+
+                data.forEach(item => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>
+                            <strong style="color:var(--admin-primary);">${item.judul}</strong><br>
+                            <small style="color:#64748b;">${item.tanggal}</small>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-sm-action btn-edit" onclick='editArtikel(${JSON.stringify(item).replace(/'/g, "&apos;")})'><i class="fa-solid fa-pen"></i> Edit</button>
+                                <button class="btn-sm-action btn-del" onclick="hapusArtikel('${item.id}')"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    list.appendChild(tr);
+                });
+            } catch (err) {
+                console.error("Gagal muat CMS list:", err);
+                list.innerHTML = "<tr><td colspan='2' style='text-align:center; color:red;'>Gagal memuat data.</td></tr>";
+            }
+        }
+
+        function editArtikel(item) {
+            document.getElementById("editArticleId").value = item.id;
+            document.getElementById("judul").value = item.judul;
+            document.getElementById("tanggal").value = item.tanggal;
+            editor.innerHTML = item.isi;
+            coverBase64 = item.gambar_url || "";
+            
+            if (coverBase64) {
+                document.getElementById("coverPreviewImg").src = coverBase64;
+                document.getElementById("coverPreviewBox").style.display = "flex";
+            } else {
+                document.getElementById("coverPreviewBox").style.display = "none";
+            }
+
+            document.getElementById("btnPublish").innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan';
+            document.getElementById("btnCancelEdit").style.display = "inline-flex";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function hapusArtikel(id) {
+            if (confirm("Apakah Anda yakin ingin menghapus artikel ini?")) {
+                try {
+                    const { error } = await supabaseClient.from('berita').delete().eq('id', id);
+                    if (error) throw error;
+                    alert("Artikel berhasil dihapus.");
+                    muatListCMS();
+                } catch (err) {
+                    alert("Gagal menghapus artikel: " + err.message);
+                }
+            }
+        }
+
+        function resetForm() {
+            document.getElementById("editArticleId").value = "";
+            document.getElementById("formPost").reset();
+            editor.innerHTML = "";
+            coverBase64 = "";
+            document.getElementById("coverPreviewBox").style.display = "none";
+            document.getElementById("btnPublish").innerHTML = '<i class="fa-solid fa-paper-plane"></i> Terbitkan Artikel';
+            document.getElementById("btnCancelEdit").style.display = "none";
+        }
+    </script>
+</body>
+</html>

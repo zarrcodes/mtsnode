@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel - MTs Muhammadiyah Martapura</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           TAMPILAN BACA BERITA (NEWS PORTAL STYLE)
+           ========================================= */
+        
+        body {
+            background-color: #f8fafc; /* Background luar agak abu-abu */
+        }
+
+        .reading-layout {
+            padding: 40px 20px;
+        }
+
+        /* BOX KERTAS BACA ARTIKEL */
+        .reading-container {
+            max-width: 780px; /* Lebar ideal membaca */
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 45px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.03);
+        }
+
+        /* HEADER JUDUL ARTIKEL */
+        .artikel-header-box {
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .artikel-detail-judul {
+            font-size: 34px !important;
+            font-weight: 800 !important;
+            color: #0f172a;
+            line-height: 1.35 !important;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+        }
+
+        /* TANGGAL & PENULIS */
+        .artikel-detail-meta {
+            font-size: 13.5px;
+            color: #64748b;
+            font-weight: 600;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* GAMBAR COVER ARTIKEL */
+        .artikel-detail-img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+   /* MEMBERI JARAK DAN SPASI IDEAL PADA GAMBAR SISIPAN */
+.artikel-detail-isi figure {
+    margin: 30px auto !important;
+    text-align: center;
+    display: block;
+    clear: both;
+}
+
+.artikel-detail-isi figure img {
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.artikel-detail-isi figcaption {
+    font-size: 13.5px;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 10px;
+    line-height: 1.4;
+}
+
+.artikel-detail-isi p {
+    margin-bottom: 1.6rem !important;
+}
+
+
+        /* STYLING GAMBAR DI DALAM ARTIKEL */
+        .artikel-detail-isi figure {
+            margin: 15px auto;
+            text-align: center;
+        }
+        
+        .artikel-detail-isi figure img {
+            border-radius: 8px;
+            max-width: 100%;
+        }
+
+        .artikel-detail-isi figcaption {
+            font-size: 13px;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* STYLING QUOTE DI ARTIKEL */
+        .artikel-detail-isi blockquote {
+            border-left: 4px solid var(--biru-muh);
+            background: #f8fafc;
+            padding: 15px 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: #475569;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* =========================================
+           GRID POSTINGAN LAINNYA DI BAWAH ARTIKEL
+           ========================================= */
+        .post-lainnya-section {
+            max-width: 1000px;
+            margin: 50px auto 0 auto;
+        }
+
+        .section-heading-news {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--biru-muh);
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        #artikelGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .artikel-card {
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #f1f5f9;
+        }
+
+        .artikel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .artikel-img-box {
+            width: 100%;
+            height: 180px;
+            background: #e2e8f0;
+        }
+
+        .artikel-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .artikel-content {
+            padding: 18px;
+        }
+
+        .artikel-meta-box {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .artikel-judul {
+            font-size: 16px;
+            color: #0f172a;
+            font-weight: 800;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        /* RESPONSIVE MOBILE ADJUSTMENTS */
+        @media (max-width: 850px) {
+            #artikelGrid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .reading-layout { padding: 20px 10px; }
+            .reading-container { padding: 25px 20px; border-radius: 8px; }
+            .artikel-detail-judul { font-size: 26px !important; }
+            .artikel-detail-isi { font-size: 16px; line-height: 1.75; }
+            #artikelGrid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Logo MTs Muhammadiyah">
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="profil.html">Profil Sekolah</a></li>
+                <li><a href="https://forms.gle/contoh" target="_blank" class="btn-ppdb">PPDB</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Tenaga Pendidik ▼</a>
+                    <div class="dropdown-content">
+                        <a href="struktur.html">Struktur Organisasi</a>
+                        <a href="pendidik.html">Pendidik & Kependidikan</a>
+                    </div>
+                </li>
+                <li><a href="sarpras.html">Sarana Prasarana</a></li>
+                <li><a href="eskul.html">Ekstrakulikuler</a></li>
+                <li><a href="artikel.html" class="active">Artikel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- WRAPPER HALAMAN BACA -->
+    <div class="reading-layout">
+        
+        <!-- KONTEN ARTIKEL UTAMA (KERTAS PUTIH) -->
+        <main class="reading-container" id="artikelFullContent">
+            <!-- Teks Loading sebelum JS berjalan -->
+            <div style="text-align: center; padding: 60px 0;">
+                <p style="color: #64748b; font-size: 16px; font-weight: 600;">Memuat artikel...</p>
+            </div>
+        </main>
+
+        <!-- KONTEN ARTIKEL LAINNYA / SEMUA ARTIKEL -->
+        <section class="post-lainnya-section">
+            <h2 class="section-heading-news">Artikel Lainnya</h2>
+            <div id="artikelGrid">
+                <!-- Card artikel otomatis diinjeksi oleh script.js ke sini -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <img src="assets/logo-putih.png" alt="Logo Bawah" class="footer-logo">
+                    <p>Jl. Kertak Baru, RT.004/RW.02, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan 70651</p>
+                    <p>Email: mtsmuhammadiyahmartapura@gmail.com</p>
+                    
+                    <div class="social-links">
+                        <p><strong>Ikuti Kami:</strong></p>
+                        <a href="https://instagram.com/mstmuhmtp" target="_blank" class="btn-sosmed">Instagram</a>
+                    </div>
+                </div>
+                
+                <div class="footer-maps">
+                    <p style="margin-bottom: 10px; font-weight: bold;">Peta Lokasi:</p>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?q=Mts%20Muhammadiyah%20Martapura&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" width="100%" height="200" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 MTs Muhammadiyah Martapura
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTs Muhammadiyah Martapura</title>
+
+    <!-- CSS Swiper.js (Buat Touch/Slide Digeser) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. NAVBAR (TANPA BORDER) -->
+    <nav class="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png">
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">Beranda</a></li>
+                <li><a href="profil.html">Profil Sekolah</a></li>
+                <li><a href="https://linktr.ee/mtsmuhmtp" target="_blank" class="btn-ppdb">PPDB</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Tenaga Pendidik Dan Kependidikan▼</a>
+                    <div class="dropdown-content">
+                        <a href="struktur.html">Struktur Organisasi</a>
+                        <a href="pendidik.html">Tenaga Pendidik Dan Kependidikan</a>
+                    </div>
+                </li>
+                <li><a href="sarpras.html">Sarana Prasarana</a></li>
+                <li><a href="eskul.html">Ekstrakulikuler</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 2. BANNER SLIDER (SWIPER - BISA DIGESER, TIRUS, POLOS) -->
+    <section class="banner-container">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/ppdb.jpg" alt="Banner 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/banner.png" alt="Banner 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/lapangan.jpg" alt="Banner 3">
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- 3. MOTTO & VISI -->
+    <section class="section-container">
+        <div class="grid-2-col">
+            <div class="info-card center-text">
+                <h2 class="card-title">MOTO</h2>
+                <p class="card-text"><strong>MEMBANGUN GENERASI ISLAM YANG SEBENAR-BENARNYA</p>
+            </div>
+            <div class="info-card center-text">
+                <h2 class="card-title">VISI</h2>
+                <p class="card-text">MENDIDIK PESERTA DIDIK BERAQIDAH KUAT, RAJIN BERIBADAH DAN FASIH MEMBACA AL-QUR'AN.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FASILITAS -->
+    <section class="section-container">
+        <h2 class="section-heading">FASILITAS</h2>
+        <div class="grid-3-col">
+            <div class="info-card">
+                <img src="assets/kelas.jpg" alt="Ruang Kelas" class="card-img">
+                <h3 class="card-title-sm">Ruang Kelas</h3>
+               
+            </div>
+            <div class="info-card">
+                <img src="assets/mushala.jpg" alt="Masjid" class="card-img">
+                <h3 class="card-title-sm">mushala</h3>
+           
+            </div>
+            <div class="info-card">
+                <img src="assets/perpustakaan.jpg" alt="Perpustakaan" class="card-img">
+                <h3 class="card-title-sm">Perpustakaan</h3>
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SAMBUTAN KEPALA MADRASAH -->
+    <section class="section-container">
+        <h2 class="section-heading">SAMBUTAN KEPALA MADRASAH</h2>
+        <div class="info-card sambutan-flex">
+            <img src="assets/kepsek.png" alt="Rahman Ansyari S.Pd." class="kepsek-img">
+            <div class="sambutan-text-box">
+                <h3 class="card-title-sm" style="color: #0b3663;">Rahman Ansyari S.Pd.</h3>
+                <p class="card-desc">Assalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+                <p class="card-desc">Selamat datang di website resmi MTs Muhammadiyah Martapura. Melalui media ini, kami berharap dapat memberikan informasi yang akurat dan transparan terkait kegiatan akademik, kesiswaan, dan perkembangan sekolah kepada seluruh wali murid dan masyarakat luas.</p>
+                <p class="card-desc">Mari kita wujudkan generasi islami yang sebenar-benarnya. Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ARTIKEL TERBARU -->
+    <section class="section-container">
+        <h2 class="section-heading">ARTIKEL TERBARU</h2>
+        <div class="grid-3-col" id="artikelGrid">
+            <p style="text-align: center; width: 100%; grid-column: 1 / -1;">Memuat artikel...</p>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <img src="assets/logo-putih.png" alt="Logo Bawah" class="footer-logo">
+                    <p>Jl. Kertak Baru, RT.004/RW.02, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan 70651</p>
+                    <p>Email: mtsmuhammadiyahmartapura@gmail.com</p>
+                    
+                    <div class="social-links">
+                        <p><strong>Ikuti Kami:</strong></p>
+                        <a href="https://instagram.com/mtsmuhmtp" target="_blank" class="btn-sosmed">Instagram</a>
+         
+                    </div>
+                </div>
+                
+                <div class="footer-maps">
+                    <p style="margin-bottom: 10px; font-weight: bold;">Peta Lokasi:</p>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?q=Mts%20Muhammadiyah%20Martapura&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" width="100%" height="200" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 MTs Muhammadiyah Martapura
+        </div>
+    </footer>
+
+    <!-- SCRIPT SWIPER JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

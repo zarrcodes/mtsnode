@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenaga Pendidik & Kependidikan - MTs Muhammadiyah Martapura</title>
+
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-header-banner {
+            background-color: var(--biru-muh);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .page-header-banner h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .page-header-banner p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* GRID GURU (3 KOLOM DESKTOP, 2 TABLET, 1 HP) */
+        .guru-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .guru-card {
+            background-color: var(--bg-card);
+            padding: 20px 15px;
+            text-align: center;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .guru-card:hover {
+            transform: translateY(-4px);
+            background-color: #e2f1f8;
+        }
+
+        .guru-foto-box {
+            width: 130px;
+            height: 160px;
+            margin: 0 auto 12px auto;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .guru-foto-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .guru-nama {
+            color: var(--biru-muh);
+            font-size: 14.5px;
+            font-weight: bold;
+            line-height: 1.35;
+            margin: 0;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .guru-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .guru-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVBAR -->
+    <nav class="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo.png" alt="Logo MTs Muhammadiyah">
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="profil.html">Profil Sekolah</a></li>
+                <li><a href="https://linktr.ee/mtsmuhmtp" target="_blank" class="btn-ppdb">PPDB</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="active">Tenaga Pendidik Dan Kependidikan▼</a>
+                    <div class="dropdown-content">
+                        <a href="struktur.html">Struktur Organisasi</a>
+                        <a href="pendidik.html" class="active">Tenaga Pendidik Dan Kependidikan</a>
+                    </div>
+                </li>
+                <li><a href="sarpras.html">Sarana Prasarana</a></li>
+                <li><a href="eskul.html">Ekstrakulikuler</a></li>
+                <li><a href="artikel.html">Artikel</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 2. HEADER BANNER -->
+    <section class="page-header-banner">
+        <h1>TENAGA PENDIDIK & KEPENDIDIKAN</h1>
+        
+    </section>
+
+    <!-- 3. KONTEN UTAMA (FOTO + NAMA LENGKAP & GELAR) -->
+    <main class="section-container">
+        <div class="guru-grid">
+            
+            <!-- 1. RAHMAN -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/rahman.jpg" alt="Rahman Ansyari, S.Pd">
+                </div>
+                <h3 class="guru-nama">Rahman Ansyari, S.Pd</h3>
+            </div>
+
+            <!-- 2. ANAS -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/anas.jpg" alt="Anas, S.P">
+                </div>
+                <h3 class="guru-nama">Anas, S.P</h3>
+            </div>
+
+            <!-- 3. RASMILAWATI (MIMIL) -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/mimil.jpg" alt="Rasmilawati, SE">
+                </div>
+                <h3 class="guru-nama">Rasmilawati, SE</h3>
+            </div>
+
+            <!-- 4. NUR HIKMAH -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/hikmah.jpg" alt="Nur Hikmah, S.Pd.I">
+                </div>
+                <h3 class="guru-nama">Nur Hikmah, S.Pd.I</h3>
+            </div>
+
+            <!-- 5. DINA WAHDIANI -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/dina.jpg" alt="Dina Wahdiani, S.Pd">
+                </div>
+                <h3 class="guru-nama">Dina Wahdiani, S.Pd</h3>
+            </div>
+
+            <!-- 6. HELMAH -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/helmah.jpg" alt="Helmah, S.Pd">
+                </div>
+                <h3 class="guru-nama">Helmah, S.Pd</h3>
+            </div>
+
+            <!-- 7. ABDUL RASYID -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/rasyid.jpg" alt="Abdul Rasyid, S.Pd.I">
+                </div>
+                <h3 class="guru-nama">Abdul Rasyid, S.Pd.I</h3>
+            </div>
+
+            <!-- 8. SULIMAN BUKHARI -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/suliman.jpg" alt="Suliman Bukhari, S.Pd">
+                </div>
+                <h3 class="guru-nama">Suliman Bukhari, S.Pd</h3>
+            </div>
+
+            <!-- 9. FATMAWATI -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/fatmawati.jpg" alt="Fatmawati, S.Sos">
+                </div>
+                <h3 class="guru-nama">Fatmawati, S.Sos</h3>
+            </div>
+
+            <!-- 10. M. RIDHO -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/ridho.jpg" alt="M. Ridho, M.Pd">
+                </div>
+                <h3 class="guru-nama">M. Ridho, M.Pd</h3>
+            </div>
+
+            <!-- 11. SULTHON MISFIR -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/sulton.jpg" alt="Sulthon Misfir, M.Ag">
+                </div>
+                <h3 class="guru-nama">Sulthon Misfir, M.Ag</h3>
+            </div>
+
+            <!-- 12. SADDAT -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/sadat.jpg" alt="Saddat, S.Ag">
+                </div>
+                <h3 class="guru-nama">Saddat, S.Ag</h3>
+            </div>
+
+            <!-- 13. LAILY -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/laily.jpg" alt="Laily">
+                </div>
+                <h3 class="guru-nama">Laily Fadliah S.Pd.</h3>
+            </div>
+
+            <!-- 14. SOFA -->
+            <div class="guru-card">
+                <div class="guru-foto-box">
+                    <img src="assets/sofa.jpg" alt="Sova">
+                </div>
+                <h3 class="guru-nama">Nursova, S. E</h3>
+            </div>
+
+       
+
+        </div>
+    </main>
+
+    <!-- 4. FOOTER -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <img src="assets/logo-putih.png" alt="Logo Bawah" class="footer-logo">
+                    <p>Jl. Kertak Baru, RT.004/RW.02, Cindai Alus, Kec. Martapura, Kabupaten Banjar, Kalimantan Selatan 70651</p>
+                    <p>Email: mtsmuhammadiyah@gmail.com</p>
+                    
+                    <div class="social-links">
+                        <p><strong>Ikuti Kami:</strong></p>
+                        <a href="https://instagram.com/mtsmuhmtp" target="_blank" class="btn-sosmed">Instagram</a>
+                    </div>
+                </div>
+                
+                <div class="footer-maps">
+                    <p style="margin-bottom: 10px; font-weight: bold;">Peta Lokasi:</p>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?q=Mts%20Muhammadiyah%20Martapura&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" width="100%" height="200" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2026 MTs Muhammadiyah Martapura
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
